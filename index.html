@@ -108,13 +108,17 @@ footer{background:var(--foot);color:#fff;padding:48px 0 0;text-align:center}
 .socials a{width:48px;height:48px;border-radius:50%;background:#262626;display:grid;place-items:center;transition:transform .3s cubic-bezier(.3,1.4,.5,1),background .25s}
 .socials a:hover{transform:translateY(-3px) scale(1.06);background:#333}
 .socials svg{width:22px;height:22px;fill:#fff}
-.slider-wrap{position:relative;overflow:hidden;padding:20px 0 40px;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.slider-track{display:flex;gap:16px;width:max-content;animation:slide 40s linear infinite}
-.slider-track:hover{animation-play-state:paused}
-.slider-track img{width:220px;height:140px;object-fit:cover;border-radius:14px;flex-shrink:0;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.showcase-carousel{position:relative;display:grid;gap:14px;overflow:hidden;padding:22px 0 38px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.showcase-lane{position:relative;overflow:hidden;width:100%}
+.showcase-track{display:flex;align-items:center;gap:16px;width:max-content;will-change:transform}
+.lane-forward .showcase-track{animation:showcase-forward 52s linear infinite}
+.lane-reverse .showcase-track{animation:showcase-reverse 58s linear infinite}
+.showcase-lane:hover .showcase-track{animation-play-state:paused}
+.showcase-track img{display:block;width:clamp(190px,24vw,280px);height:clamp(124px,16vw,180px);object-fit:cover;border-radius:15px;flex-shrink:0;box-shadow:0 8px 24px rgba(0,0,0,.25);background:#262626}
+@keyframes showcase-forward{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes showcase-reverse{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0)*.08s)}.rv.in{opacity:1;transform:none}
-@media(max-width:480px){.act{height:48px;font-size:14px}.brand-input{height:48px;font-size:15px}.c{min-height:220px;padding:18px 14px}h1{font-size:clamp(25px,7vw,32px)}.slider-track img{width:180px;height:115px}}
+@media(max-width:480px){.act{height:48px;font-size:14px}.brand-input{height:48px;font-size:15px}.c{min-height:220px;padding:18px 14px}h1{font-size:clamp(25px,7vw,32px)}.showcase-track img{width:180px;height:118px}}
 </style>
 </head>
 <body>
@@ -292,27 +296,64 @@ Send
 <a href="tel:+234" aria-label="Phone"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg></a>
 </div>
 </div>
-<div class="slider-wrap">
-<div class="slider-track">
-<img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=440&h=280&fit=crop" alt="Dashboard">
-<img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=440&h=280&fit=crop" alt="E-commerce">
-<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=440&h=280&fit=crop" alt="Team">
-<img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=440&h=280&fit=crop" alt="Workspace">
-<img src="https://images.unsplash.com/photo-1467232004584-a241c7c34239?w=440&h=280&fit=crop" alt="Landing">
-<img src="https://images.unsplash.com/photo-1556740758-90dde222e1e1?w=440&h=280&fit=crop" alt="Shop">
-<img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=440&h=280&fit=crop" alt="Desk">
-<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=440&h=280&fit=crop" alt="Code">
-<img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=440&h=280&fit=crop" alt="">
-<img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=440&h=280&fit=crop" alt="">
-<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=440&h=280&fit=crop" alt="">
-<img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=440&h=280&fit=crop" alt="">
-<img src="https://images.unsplash.com/photo-1467232004584-a241c7c34239?w=440&h=280&fit=crop" alt="">
-<img src="https://images.unsplash.com/photo-1556740758-90dde222e1e1?w=440&h=280&fit=crop" alt="">
-<img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=440&h=280&fit=crop" alt="">
-<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=440&h=280&fit=crop" alt="">
-</div>
-</div>
-</footer>
+<div class="showcase-carousel" aria-label="Framer website inspiration gallery">
+  <div class="showcase-lane lane-forward"><div class="showcase-track"><img src="https://media.framerpanda.com/images/curate/curate-image-1.jpg" alt="Framer website design 1" loading="lazy" decoding="async">
+<img src="https://framerusercontent.com/assets/hEwy303wdrfmItApVGYJUvoOYtg.jpg" alt="Framer website design 2" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/curate/curate-image-2.jpg" alt="Framer website design 3" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F45951%2FTYWhkaeidrZl3oLWnenV0PVigHg-MsNEskxabhKsHjyRn1pLiz17MOMgKo.jpg&w=1920&q=100" alt="Framer website design 4" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Fmedia%2Fe7937938-3ed7-4245-a36a-73d04e1216ed%2Fg7rtedz7&w=1080&q=100" alt="Framer website design 5" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F59807%2Ftavrix-1i6AeGdG03AFsK20CbYTE8wCRa5UR3&w=3840&q=100" alt="Framer website design 6" loading="lazy" decoding="async">
+<img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/d88abf214765659.675de8a3f2f5d.png" alt="Framer website design 7" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/quickstart-connect.png?w=2500&fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=fc7d6a73609c2796c78bb2ea0b4dc4dd" alt="Framer website design 8" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/hero-light.png?fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=562b2700cb32534f26ed32bce73daa54" alt="Framer website design 9" loading="lazy" decoding="async">
+<img src="https://saaslandingpage.com/wp-content/uploads/2024/03/3d-landing-page-760x950.png" alt="Framer website design 10" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/druo/druo-image-1.jpg" alt="Framer website design 11" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F53318%2Fcreate-snBP1lQGbExdj3bwfm0I3MOzlRS2is&w=1920&q=60" alt="Framer website design 12" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/stopper/stopper-image-3.jpg" alt="Framer website design 13" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F46060%2FXLeyyXn5SE7z0Ip0fpGcR4Woiw-s4b6cOgupY3oqjcX5wSr5yJ7dghbN6.jpg&w=750&q=100" alt="Framer website design 14" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/curate/curate-image-1.jpg" alt="Framer website design 15" loading="lazy" decoding="async">
+<img src="https://framerusercontent.com/assets/hEwy303wdrfmItApVGYJUvoOYtg.jpg" alt="Framer website design 16" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/curate/curate-image-2.jpg" alt="Framer website design 17" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F45951%2FTYWhkaeidrZl3oLWnenV0PVigHg-MsNEskxabhKsHjyRn1pLiz17MOMgKo.jpg&w=1920&q=100" alt="Framer website design 18" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Fmedia%2Fe7937938-3ed7-4245-a36a-73d04e1216ed%2Fg7rtedz7&w=1080&q=100" alt="Framer website design 19" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F59807%2Ftavrix-1i6AeGdG03AFsK20CbYTE8wCRa5UR3&w=3840&q=100" alt="Framer website design 20" loading="lazy" decoding="async">
+<img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/d88abf214765659.675de8a3f2f5d.png" alt="Framer website design 21" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/quickstart-connect.png?w=2500&fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=fc7d6a73609c2796c78bb2ea0b4dc4dd" alt="Framer website design 22" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/hero-light.png?fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=562b2700cb32534f26ed32bce73daa54" alt="Framer website design 23" loading="lazy" decoding="async">
+<img src="https://saaslandingpage.com/wp-content/uploads/2024/03/3d-landing-page-760x950.png" alt="Framer website design 24" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/druo/druo-image-1.jpg" alt="Framer website design 25" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F53318%2Fcreate-snBP1lQGbExdj3bwfm0I3MOzlRS2is&w=1920&q=60" alt="Framer website design 26" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/stopper/stopper-image-3.jpg" alt="Framer website design 27" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F46060%2FXLeyyXn5SE7z0Ip0fpGcR4Woiw-s4b6cOgupY3oqjcX5wSr5yJ7dghbN6.jpg&w=750&q=100" alt="Framer website design 28" loading="lazy" decoding="async"></div></div>
+  <div class="showcase-lane lane-reverse"><div class="showcase-track"><img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F46060%2FXLeyyXn5SE7z0Ip0fpGcR4Woiw-s4b6cOgupY3oqjcX5wSr5yJ7dghbN6.jpg&w=750&q=100" alt="Framer website design 1" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/stopper/stopper-image-3.jpg" alt="Framer website design 2" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F53318%2Fcreate-snBP1lQGbExdj3bwfm0I3MOzlRS2is&w=1920&q=60" alt="Framer website design 3" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/druo/druo-image-1.jpg" alt="Framer website design 4" loading="lazy" decoding="async">
+<img src="https://saaslandingpage.com/wp-content/uploads/2024/03/3d-landing-page-760x950.png" alt="Framer website design 5" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/hero-light.png?fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=562b2700cb32534f26ed32bce73daa54" alt="Framer website design 6" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/quickstart-connect.png?w=2500&fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=fc7d6a73609c2796c78bb2ea0b4dc4dd" alt="Framer website design 7" loading="lazy" decoding="async">
+<img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/d88abf214765659.675de8a3f2f5d.png" alt="Framer website design 8" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F59807%2Ftavrix-1i6AeGdG03AFsK20CbYTE8wCRa5UR3&w=3840&q=100" alt="Framer website design 9" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Fmedia%2Fe7937938-3ed7-4245-a36a-73d04e1216ed%2Fg7rtedz7&w=1080&q=100" alt="Framer website design 10" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F45951%2FTYWhkaeidrZl3oLWnenV0PVigHg-MsNEskxabhKsHjyRn1pLiz17MOMgKo.jpg&w=1920&q=100" alt="Framer website design 11" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/curate/curate-image-2.jpg" alt="Framer website design 12" loading="lazy" decoding="async">
+<img src="https://framerusercontent.com/assets/hEwy303wdrfmItApVGYJUvoOYtg.jpg" alt="Framer website design 13" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/curate/curate-image-1.jpg" alt="Framer website design 14" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F46060%2FXLeyyXn5SE7z0Ip0fpGcR4Woiw-s4b6cOgupY3oqjcX5wSr5yJ7dghbN6.jpg&w=750&q=100" alt="Framer website design 15" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/stopper/stopper-image-3.jpg" alt="Framer website design 16" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F53318%2Fcreate-snBP1lQGbExdj3bwfm0I3MOzlRS2is&w=1920&q=60" alt="Framer website design 17" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/druo/druo-image-1.jpg" alt="Framer website design 18" loading="lazy" decoding="async">
+<img src="https://saaslandingpage.com/wp-content/uploads/2024/03/3d-landing-page-760x950.png" alt="Framer website design 19" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/hero-light.png?fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=562b2700cb32534f26ed32bce73daa54" alt="Framer website design 20" loading="lazy" decoding="async">
+<img src="https://mintcdn.com/framergeeks-5082ee09/N10R_Z8p3wsemciR/images/quickstart-connect.png?w=2500&fit=max&auto=format&n=N10R_Z8p3wsemciR&q=85&s=fc7d6a73609c2796c78bb2ea0b4dc4dd" alt="Framer website design 21" loading="lazy" decoding="async">
+<img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/d88abf214765659.675de8a3f2f5d.png" alt="Framer website design 22" loading="lazy" decoding="async">
+<img src="https://www.framer.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F59807%2Ftavrix-1i6AeGdG03AFsK20CbYTE8wCRa5UR3&w=3840&q=100" alt="Framer website design 23" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Fmedia%2Fe7937938-3ed7-4245-a36a-73d04e1216ed%2Fg7rtedz7&w=1080&q=100" alt="Framer website design 24" loading="lazy" decoding="async">
+<img src="https://sub.chujiqiqi.com/creators-assets/_next/image/?url=https%3A%2F%2Fy4pdgnepgswqffpt.public.blob.vercel-storage.com%2Ftemplates%2F45951%2FTYWhkaeidrZl3oLWnenV0PVigHg-MsNEskxabhKsHjyRn1pLiz17MOMgKo.jpg&w=1920&q=100" alt="Framer website design 25" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/curate/curate-image-2.jpg" alt="Framer website design 26" loading="lazy" decoding="async">
+<img src="https://framerusercontent.com/assets/hEwy303wdrfmItApVGYJUvoOYtg.jpg" alt="Framer website design 27" loading="lazy" decoding="async">
+<img src="https://media.framerpanda.com/images/curate/curate-image-1.jpg" alt="Framer website design 28" loading="lazy" decoding="async"></div></div>
+</div></footer>
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
