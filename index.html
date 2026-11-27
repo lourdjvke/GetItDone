@@ -497,7 +497,7 @@ const flowSteps=selectedPreset?[
  ...defaultSteps
 ]:defaultSteps;
 stepsContainer.innerHTML=flowSteps.map((step,i)=>'<div class="st" data-step="'+i+'"><i><span class="spin"></span></i><span class="label">'+escapeHtml(step[0])+'</span></div>').join('');
-const steps=$('#statusList .st');
+const steps=Array.from($('#statusList .st'));
 $('#resultMsg').classList.remove('on');$('#waWrap').classList.remove('on');
 steps.forEach((st,i)=>{
   setTimeout(()=>st.classList.add('on'),i*1100);
