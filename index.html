@@ -49,6 +49,34 @@ h1{font-size:clamp(28px,6.8vw,52px);max-width:720px;margin:0 auto;padding:0 10px
 .act{display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:14px;font-weight:600;font-size:15px;white-space:nowrap;transition:transform .25s cubic-bezier(.3,1.4,.5,1),background .25s,color .25s,box-shadow .25s;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .act:active{transform:scale(.97)}.act.tell{background:var(--pill);color:var(--ink)}.act.tell.active{background:var(--danger);color:#fff;box-shadow:0 8px 22px rgba(239,68,68,.22)}.act.build{background:var(--btn);color:var(--btnt)}.act.build:disabled{opacity:.55;pointer-events:none}
 .act svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* Preset gallery */
+.preset-toggle{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:50px;border-radius:14px;background:var(--pill);color:var(--ink);font-weight:600;font-size:15px;transition:background .25s,transform .25s}
+.preset-toggle:active{transform:scale(.98)}
+.preset-toggle svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s}
+.preset-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+.preset-panel{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .48s cubic-bezier(.2,.7,.2,1),opacity .3s;margin-top:0}
+.preset-panel.open{grid-template-rows:1fr;opacity:1;margin-top:12px}
+.preset-panel-inner{min-height:0;overflow:hidden}
+.preset-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 2px 10px;font-size:12px;color:var(--mute)}
+.preset-track{display:flex;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:2px 2px 9px;scrollbar-width:none}
+.preset-track::-webkit-scrollbar{display:none}
+.preset-card{flex:0 0 72%;max-width:230px;min-width:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--tile);text-align:left;scroll-snap-align:start;transition:border-color .2s,box-shadow .2s,transform .2s}
+.preset-card.selected{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.preset-card:active{transform:scale(.985)}
+.preset-preview{height:128px;background:#f0f0f0;position:relative;overflow:hidden}
+.preset-preview iframe{display:block;width:100%;height:100%;border:0;background:#fff;pointer-events:none}
+.preset-meta{padding:9px 11px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.preset-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preset-kind{font-size:11px;color:var(--mute);white-space:nowrap}
+.preset-skeleton{height:128px;position:relative;overflow:hidden;background:linear-gradient(110deg,#e8e8e8 8%,#f7f7f7 18%,#e8e8e8 33%);background-size:200% 100%;animation:preset-shimmer 1.35s linear infinite}
+.preset-skeleton:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.72) 48%,transparent 70%);transform:translateX(-100%);animation:preset-glint 1.5s ease-in-out infinite}
+@keyframes preset-shimmer{to{background-position-x:-200%}}
+@keyframes preset-glint{to{transform:translateX(100%)}}
+.preset-empty{padding:14px 10px;color:var(--mute);font-size:12px;text-align:center}
+.preset-error{color:var(--danger)}
+@media(prefers-reduced-motion:reduce){.preset-panel,.preset-toggle svg,.preset-skeleton,.preset-skeleton:after{animation:none;transition:none}}
+
 .reserved{text-align:left;padding:4px 0 0}
 .reserved .status-list{display:grid;gap:11px;margin-bottom:20px}
 .reserved .st{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--mute);opacity:0;transform:translateY(8px);transition:opacity .4s,transform .45s cubic-bezier(.2,.7,.2,1)}
@@ -158,13 +186,25 @@ more.
 <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
 </div>
 </div>
+<div class="preset-panel" id="presetPanel" aria-hidden="true">
+  <div class="preset-panel-inner">
+    <div class="preset-heading"><span>Choose a starting point</span><span id="presetCount">Loading presets…</span></div>
+    <div class="preset-track" id="presetTrack" aria-live="polite">
+      <div class="preset-card"><div class="preset-skeleton"></div><div class="preset-meta"><span class="preset-name">Loading preview</span></div></div><div class="preset-card"><div class="preset-skeleton"></div><div class="preset-meta"><span class="preset-name">Loading preview</span></div></div><div class="preset-card"><div class="preset-skeleton"></div><div class="preset-meta"><span class="preset-name">Loading preview</span></div></div>
+    </div>
+  </div>
+</div>
 <div class="actions">
-<button class="act tell" id="tellBtn" type="button">
-<svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-Talk
+<button class="preset-toggle" id="presetToggle" type="button" aria-expanded="false" aria-controls="presetPanel">
+  <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+  Presets
 </button>
 <button class="act build" id="buildBtn" type="button">
-Build
+<svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+Presets
+</button>
+<button class="act build" id="buildBtn" type="button">
+Get my site
 <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
 </button>
 </div>
@@ -379,7 +419,10 @@ tr.onpointermove=e=>{if(drag)fx(e)};tr.onpointerup=tr.onpointercancel=()=>{drag=
 new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(tr);paint();
 (function f(t){if(!drag&&vis&&t-idle>2200){tg=50+42*Math.sin(t/1700+n*2.1);v+=(tg-v)*.05;paint()}requestAnimationFrame(f)})(0)});
 
-const inputWrap=$('#inputWrap'),brandInput=$('#brandInput'),tellBtn=$('#tellBtn'),transcriptEl=$('#transcript'),bars=$$('#visualizer span');
+const inputWrap=$('#inputWrap'),brandInput=$('#brandInput'),tellBtn=$('#tellBtn'),transcriptEl=$('#transcript'),bars=$('#visualizer span');
+const presetToggle=$('#presetToggle'),presetPanel=$('#presetPanel'),presetTrack=$('#presetTrack'),presetCount=$('#presetCount');
+const FIREBASE_TEMPLATES_URL='https://octen-29d12-default-rtdb.firebaseio.com/templates.json';
+let presetsLoaded=false,presetsLoading=false,presets=[],selectedPreset=null;
 let listening=false,recognition=null,animId=null,lastTranscript='';
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(SR){recognition=new SR();recognition.continuous=true;recognition.interimResults=true;recognition.lang='en-US';
@@ -391,23 +434,81 @@ function startVisualizer(){cancelAnimationFrame(animId);const tick=()=>{bars.for
 function stopVisualizer(){cancelAnimationFrame(animId);bars.forEach(b=>b.style.height='5px')}
 function startListening(){listening=true;inputWrap.classList.add('listening');tellBtn.classList.add('active');transcriptEl.textContent=lastTranscript||'Listening…';startVisualizer();if(navigator.vibrate)navigator.vibrate(30);if(recognition){try{recognition.start()}catch(_){}}}
 function stopListening(){listening=false;inputWrap.classList.remove('listening');tellBtn.classList.remove('active');stopVisualizer();if(recognition){try{recognition.stop()}catch(_){}}if(lastTranscript)brandInput.value=lastTranscript}
-tellBtn.addEventListener('pointerdown',e=>{e.preventDefault();if(!listening)startListening();else stopListening()});
+// The former Talk slot is now the Presets control.
+if(tellBtn)tellBtn.remove();
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function templateParts(record){
+  const root=record||{},code=root.code||root;
+  return {html:code.html||code.HTML||root.html||'',css:code.css||code.CSS||root.css||'',js:code.js||code.javascript||code.JS||root.js||root.javascript||'',name:root.name||root.title||root.label||root.business||'Untitled preset',category:root.category||root.type||'Website'};
+}
+function makePreviewDocument(parts){
+  const safeJs=String(parts.js||'').replace(/<\/script/gi,'<\\/script');
+  return '<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;overflow:hidden}'+parts.css+'</style></head><body>'+parts.html+'<script>'+safeJs+'<\\/script></body></html>';
+}
+function renderPresetCards(){
+  presetTrack.innerHTML='';
+  presets.forEach(p=>{
+    const card=document.createElement('button');card.type='button';card.className='preset-card'+(selectedPreset&&selectedPreset.id===p.id?' selected':'');
+    card.setAttribute('aria-pressed',selectedPreset&&selectedPreset.id===p.id?'true':'false');
+    const preview=document.createElement('div');preview.className='preset-preview';
+    const frame=document.createElement('iframe');frame.title='Preview of '+p.parts.name;frame.loading='lazy';frame.setAttribute('sandbox','allow-scripts');frame.srcdoc=makePreviewDocument(p.parts);preview.appendChild(frame);
+    const meta=document.createElement('div');meta.className='preset-meta';
+    const name=document.createElement('span');name.className='preset-name';name.textContent=p.parts.name;
+    const kind=document.createElement('span');kind.className='preset-kind';kind.textContent=p.parts.category;
+    meta.append(name,kind);card.append(preview,meta);
+    card.addEventListener('click',()=>{selectedPreset=p;renderPresetCards()});
+    presetTrack.appendChild(card);
+  });
+  presetCount.textContent=presets.length+' '+(presets.length===1?'preset':'presets');
+}
+async function loadPresets(){
+  if(presetsLoaded||presetsLoading)return;
+  presetsLoading=true;
+  presetCount.textContent='Loading presets…';
+  presetTrack.innerHTML=Array.from({length:3},()=>'<div class="preset-card"><div class="preset-skeleton"></div><div class="preset-meta"><span class="preset-name">Preparing preview…</span></div></div>').join('');
+  try{
+    const response=await fetch(FIREBASE_TEMPLATES_URL,{cache:'no-store'});
+    if(!response.ok)throw new Error('Firebase returned '+response.status);
+    const data=await response.json();
+    const entries=Array.isArray(data)?data.map((v,i)=>[String(i),v]):Object.entries(data||{});
+    presets=entries.filter(([,v])=>v&&typeof v==='object').map(([id,record])=>({id,record,parts:templateParts(record)})).filter(p=>p.parts.html||p.parts.css||p.parts.js);
+    presetsLoaded=true;
+    if(presets.length)renderPresetCards();
+    else{presetTrack.innerHTML='<div class="preset-empty">No usable templates were found yet.</div>';presetCount.textContent='0 presets';}
+  }catch(err){
+    console.error('Unable to load GetItDone presets:',err);
+    presetTrack.innerHTML='<div class="preset-empty preset-error">Could not load presets. Check that Firebase allows public read access to /templates.</div>';
+    presetCount.textContent='Unavailable';
+  }finally{presetsLoading=false}
+}
+presetToggle.addEventListener('click',()=>{
+  const open=!presetPanel.classList.contains('open');
+  presetPanel.classList.toggle('open',open);
+  presetPanel.setAttribute('aria-hidden',String(!open));
+  presetToggle.setAttribute('aria-expanded',String(open));
+  if(open)loadPresets();
+});
 
 const stageInput=$('#stageInput'),stageReserved=$('#stageReserved');
-const stepLabels=[['Fetching files','Fetched files'],['Creating wireframe','Wireframe ready'],['Writing file','Wrote file'],['Editing file','Edited file'],['Reserving site artifact','Site artifact reserved'],['Reserved','Reserved']];
+const defaultSteps=[['Fetching files','Fetched files'],['Creating wireframe','Wireframe ready'],['Writing file','Wrote file'],['Editing file','Edited file'],['Reserving site artifact','Site artifact reserved'],['Reserved','Reserved']];
 $('#buildBtn').addEventListener('click',()=>{
 const name=brandInput.value.trim()||'your site';
 if(listening)stopListening();
 stageInput.classList.add('hide');stageReserved.classList.remove('hide');
-const steps=$$('#statusList .st');
-steps.forEach(s=>{s.classList.remove('on','done');s.querySelector('.label').textContent=stepLabels[+s.dataset.step][0]});
+const stepsContainer=$('#statusList');
+const flowSteps=selectedPreset?[
+ ['Connecting preset','Connecting preset'],['Preset connected','Preset connected'],['Editing preset code','Preset code edited'],
+ ...defaultSteps
+]:defaultSteps;
+stepsContainer.innerHTML=flowSteps.map((step,i)=>'<div class="st" data-step="'+i+'"><i><span class="spin"></span></i><span class="label">'+escapeHtml(step[0])+'</span></div>').join('');
+const steps=$('#statusList .st');
 $('#resultMsg').classList.remove('on');$('#waWrap').classList.remove('on');
 steps.forEach((st,i)=>{
   setTimeout(()=>st.classList.add('on'),i*1100);
-  setTimeout(()=>{st.classList.add('done');st.querySelector('.label').textContent=stepLabels[i][1]},i*1100+700);
+  setTimeout(()=>{st.classList.add('done');st.querySelector('.label').textContent=flowSteps[i][1]},i*1100+700);
 });
 const doneAt=steps.length*1100+400;
-setTimeout(()=>{$('#resultMsg').classList.add('on');$('#resultSub').textContent=`We’ll send details for “${name}” on WhatsApp`},doneAt);
+setTimeout(()=>{$('#resultMsg').classList.add('on');$('#resultSub').textContent=(selectedPreset?'Preset “'+selectedPreset.parts.name+'” selected for ':'')+'We’ll send details for “'+name+'” on WhatsApp'},doneAt);
 setTimeout(()=>{$('#waWrap').classList.add('on')},doneAt+500);
 });
 $('#waSend').addEventListener('click',()=>{
