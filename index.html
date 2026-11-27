@@ -200,12 +200,8 @@ more.
   Presets
 </button>
 <button class="act build" id="buildBtn" type="button">
-<svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-Presets
-</button>
-<button class="act build" id="buildBtn" type="button">
-Get my site
-<svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+  Get my site
+  <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
 </button>
 </div>
 </div>
@@ -443,7 +439,7 @@ function templateParts(record){
 }
 function makePreviewDocument(parts){
   const safeJs=String(parts.js||'').replace(/<\/script/gi,'<\\/script');
-  return '<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;overflow:hidden}'+parts.css+'</style></head><body>'+parts.html+'<script>'+safeJs+'<\\/script></body></html>';
+  return '<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;overflow:hidden}'+parts.css+'</style></head><body>'+parts.html+'<script>'+safeJs+'</scr'+'ipt></body></html>';
 }
 function renderPresetCards(){
   presetTrack.innerHTML='';
