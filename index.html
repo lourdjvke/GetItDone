@@ -456,14 +456,20 @@ function renderPresetCards(){
 async function loadPresets(){
   if(presetsLoaded||presetsLoading)return;
   presetsLoading=true;
-  presetCount.textContent='Loading presets…';
-  presetTrack.innerHTML=Array.from({length:3},()=>'<div class="preset-card"><div class="preset-skeleton"></div><div class="preset-meta"><span class="preset-name">Preparing preview…</span></div></div>').join('');
+  presetCount.textContent='';
+  presetTrack.innerHTML=Array.from({length:3},()=>'<div class="preset-card"><div class="preset-skeleton"></div></div>').join('');
   try{
     const response=await fetch(FIREBASE_TEMPLATES_URL,{cache:'no-store'});
     if(!response.ok)throw new Error('Firebase returned '+response.status);
     const data=await response.json();
     const entries=Array.isArray(data)?data.map((v,i)=>[String(i),v]):Object.entries(data||{});
-    presets=entries.filter(([,v])=>v&&typeof v==='object').map(([id,record])=>({id,record,parts:templateParts(record)})).filter(p=>p.parts.html||p.parts.css||p.parts.js);
+    const seenNames=new Set();
+    presets=entries.filter(([,v])=>v&&typeof v==='object').map(([id,record])=>({id,record,parts:templateParts(record)})).filter(p=>{
+      if(!(p.parts.html||p.parts.css||p.parts.js))return false;
+      if(seenNames.has(p.parts.name))return false;
+      seenNames.add(p.parts.name);
+      return true;
+    });
     presetsLoaded=true;
     if(presets.length)renderPresetCards();
     else{presetTrack.innerHTML='<div class="preset-empty">No usable templates were found yet.</div>';presetCount.textContent='0 presets';}
